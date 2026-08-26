@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tpuswarm"
+version = "0.1.0"
+description = "Durable, preemption-resilient task and workflow runtime for accelerator fleets"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [{ name = "Sachin Konan" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/SachinKonan/TPUSwarm"
+Issues = "https://github.com/SachinKonan/TPUSwarm/issues"
+
+[project.optional-dependencies]
+server = ["fastapi[standard]>=0.115"]
+skypilot = ["skypilot[remote]>=0.13.0"]
+test = [
+    "fastapi[standard]>=0.115",
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.11",
+]
+
+[project.scripts]
+tpuswarm = "tpuswarm.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["tpuswarm"]

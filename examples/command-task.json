@@ -1,0 +1,20 @@
+{
+  "task_id": "example-command-001",
+  "idempotency_key": "example-command-001",
+  "kind": "command.v1",
+  "resource_class": "gcp-tpu-v6e-8",
+  "payload": {
+    "argv": ["bash", "-lc", "./train.sh"],
+    "completion_probe_argv": ["bash", "-lc", "test -f ./output/DONE"],
+    "preemption_argv": ["bash", "-lc", "./sync_checkpoint.sh"],
+    "pool": "tpuswarm-v6e8",
+    "resources": {
+      "accelerators": "tpu-v6e-8",
+      "use_spot": true,
+      "job_recovery": {
+        "strategy": "EAGER_NEXT_REGION",
+        "max_restarts_on_errors": 3
+      }
+    }
+  }
+}

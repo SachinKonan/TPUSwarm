@@ -1,0 +1,17 @@
+pool:
+  workers: 9
+  min_workers: 9
+  max_workers: 16
+  queue_length_threshold: 1
+  upscale_delay_seconds: 60
+  downscale_delay_seconds: 1200
+
+resources:
+  cloud: gcp
+  accelerators: tpu-v6e-8
+  use_spot: true
+
+workdir: .
+
+setup: |
+  uv sync --extra server

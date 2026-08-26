@@ -1,0 +1,33 @@
+{
+  "workflow_id": "example-ensemble-001",
+  "kind": "static_multi.v1",
+  "consistency_mode": "INDEPENDENT",
+  "payload": {
+    "components": [
+      {
+        "key": "member-a",
+        "task": {
+          "kind": "command.v1",
+          "resource_class": "gcp-tpu-v6e-8",
+          "payload": {
+            "argv": ["bash", "-lc", "./train.sh a"],
+            "pool": "tpuswarm-v6e8",
+            "resources": {"accelerators": "tpu-v6e-8", "use_spot": true}
+          }
+        }
+      },
+      {
+        "key": "member-b",
+        "task": {
+          "kind": "command.v1",
+          "resource_class": "gcp-tpu-v6e-8",
+          "payload": {
+            "argv": ["bash", "-lc", "./train.sh b"],
+            "pool": "tpuswarm-v6e8",
+            "resources": {"accelerators": "tpu-v6e-8", "use_spot": true}
+          }
+        }
+      }
+    ]
+  }
+}

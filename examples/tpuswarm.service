@@ -1,0 +1,19 @@
+[Unit]
+Description=TPUSwarm durable TPU scheduler
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=tpuswarm
+Group=tpuswarm
+WorkingDirectory=/opt/TPUSwarm
+EnvironmentFile=/etc/tpuswarm.env
+StateDirectory=tpuswarm
+ExecStart=/usr/local/bin/uv run --isolated --extra server --extra skypilot tpuswarm serve --database /var/lib/tpuswarm/tpuswarm.db
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

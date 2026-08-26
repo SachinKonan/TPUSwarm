@@ -1,0 +1,14 @@
+name: example-training
+
+resources:
+  cloud: gcp
+  accelerators: tpu-v6e-8
+  use_spot: true
+  priority: 500
+  job_recovery:
+    strategy: EAGER_NEXT_REGION
+    max_restarts_on_errors: 3
+    recover_on_exit_codes: [33, 34]
+
+run: |
+  ./train.sh --resume-from /checkpoints/latest
