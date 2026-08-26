@@ -1,6 +1,6 @@
 from tpuswarm.builtin import CommandAutoResumable
 from tpuswarm.store import SwarmStore
-from tpuswarm.types import Priority, TaskSpec
+from tpuswarm.types import ManagedJobSpec, Priority, TaskSpec
 
 
 def test_command_handler_compiles_native_recovery_and_lifecycle_hook(tmp_path):
@@ -34,3 +34,16 @@ def test_command_handler_compiles_native_recovery_and_lifecycle_hook(tmp_path):
         job.to_sky_config(priority=Priority.BLOCKING_RECOVERY)["resources"]["priority"]
         == 900
     )
+
+
+def test_null_secret_resolves_only_in_controller_environment(monkeypatch):
+    monkeypatch.setenv("TPUSWARM_TEST_SECRET", "resolved-value")
+
+    job = ManagedJobSpec(
+        name="secret-test",
+        run="true",
+        resources={"cpus": 1},
+        secrets={"TPUSWARM_TEST_SECRET": None},
+    )
+
+    assert job.secrets == {"TPUSWARM_TEST_SECRET": "resolved-value"}

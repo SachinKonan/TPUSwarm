@@ -112,6 +112,8 @@ The built-in command handler supports a completion probe, preemption hook,
 native `resources.job_recovery`, a pool, environment variables, secrets, and
 the remaining standard SkyPilot task fields. Pool jobs may not specify setup,
 workdir, or file mounts; those belong in the pool definition.
+Secret values may be `null`; TPUSwarm resolves those names from the controller
+environment immediately before launch and does not persist the resolved value.
 
 For checkpoints, prefer a SkyPilot GCS mount with `MOUNT_CACHED` and
 `MODEL_CHECKPOINT_RW`, or the application's existing atomic GCS uploader. The

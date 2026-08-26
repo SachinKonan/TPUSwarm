@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import uuid
 from collections.abc import Mapping
 from dataclasses import dataclass, field
@@ -120,9 +121,21 @@ class ManagedJobSpec:
             self, "resources", _json_dict(self.resources, field_name="resources")
         )
         object.__setattr__(self, "envs", _json_dict(self.envs, field_name="envs"))
-        object.__setattr__(
-            self, "secrets", _json_dict(self.secrets, field_name="secrets")
-        )
+        secrets = _json_dict(self.secrets, field_name="secrets")
+        resolved_secrets: dict[str, str] = {}
+        for name, value in secrets.items():
+            if value is None:
+                try:
+                    value = os.environ[name]
+                except KeyError as exc:
+                    raise ValueError(
+                        f"secret {name!r} is null but is not set in the "
+                        "TPUSwarm controller environment"
+                    ) from exc
+            if not isinstance(value, str):
+                raise TypeError(f"secret {name!r} must be a string or null")
+            resolved_secrets[name] = value
+        object.__setattr__(self, "secrets", resolved_secrets)
         object.__setattr__(
             self,
             "file_mounts",
