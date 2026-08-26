@@ -35,7 +35,9 @@ For a static ensemble known at submission time, prefer a SkyPilot Job Group:
 it already launches components in parallel and recovers a preempted component
 without restarting its siblings. Use `MultiAutoResumable` only for dynamic
 component generations, algorithmic barriers, or cross-region placement that a
-single Job Group cannot express.
+single Job Group cannot express. SkyPilot 0.13 does not allow a Job Group to
+target a Pool, so a static workload that specifically needs reusable warm
+workers should remain separate pool jobs.
 
 ## Contracts
 
