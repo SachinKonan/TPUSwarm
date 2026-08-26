@@ -103,7 +103,7 @@ class ManagedJobSpec:
     secrets: Mapping[str, str | None] = field(default_factory=dict)
     file_mounts: Mapping[str, Any] = field(default_factory=dict)
     config: Mapping[str, Any] = field(default_factory=dict)
-    api_server_access: bool = True
+    api_server_access: bool = False
 
     def __post_init__(self) -> None:
         if not self.name.strip() or not self.run.strip():

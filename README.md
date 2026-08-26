@@ -114,6 +114,8 @@ the remaining standard SkyPilot task fields. Pool jobs may not specify setup,
 workdir, or file mounts; those belong in the pool definition.
 Secret values may be `null`; TPUSwarm resolves those names from the controller
 environment immediately before launch and does not persist the resolved value.
+Ordinary tasks default `api_server_access` to false; opt in only when workload
+code genuinely needs to launch nested SkyPilot work.
 
 For checkpoints, prefer a SkyPilot GCS mount with `MOUNT_CACHED` and
 `MODEL_CHECKPOINT_RW`, or the application's existing atomic GCS uploader. The

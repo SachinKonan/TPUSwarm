@@ -104,7 +104,7 @@ class CommandAutoResumable(AutoResumable):
             secrets=payload.get("secrets", {}),
             file_mounts=payload.get("file_mounts", {}),
             config=config,
-            api_server_access=bool(payload.get("api_server_access", True)),
+            api_server_access=bool(payload.get("api_server_access", False)),
         )
 
 

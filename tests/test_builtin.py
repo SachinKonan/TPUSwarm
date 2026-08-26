@@ -28,6 +28,7 @@ def test_command_handler_compiles_native_recovery_and_lifecycle_hook(tmp_path):
     job = CommandAutoResumable().managed_job(record)
 
     assert job.pool == "v6e-pool"
+    assert job.api_server_access is False
     assert "completion probe" in job.run
     assert job.config["hooks"][0]["events"] == ["preemption", "down"]
     assert (
