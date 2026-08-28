@@ -24,13 +24,20 @@ Issues = "https://github.com/SachinKonan/TPUSwarm/issues"
 
 [project.optional-dependencies]
 server = ["fastapi[standard]>=0.115"]
-skypilot = ["skypilot[remote]>=0.13.0"]
+skypilot = [
+    "skypilot[remote] @ git+https://github.com/SachinKonan/skypilot.git@8260324adbd8a3d2bf0cb2af332c4e363b4e2e71",
+]
 test = [
     "fastapi[standard]>=0.115",
     "pytest>=8",
     "pytest-asyncio>=0.24",
     "ruff>=0.11",
 ]
+
+[tool.uv.sources]
+# The gitlink pins the tested SkyPilot recovery patch. uv development installs
+# use the local checkout; other installers fetch the same commit above.
+skypilot = { path = "third_party/skypilot", editable = true }
 
 [project.scripts]
 tpuswarm = "tpuswarm.__main__:main"

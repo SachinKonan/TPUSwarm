@@ -9,6 +9,8 @@ pool:
 resources:
   cloud: gcp
   accelerators: tpu-v6e-8
+  accelerator_args:
+    gcp_queued_resource: true
   use_spot: true
 
 workdir: .

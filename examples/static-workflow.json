@@ -12,7 +12,11 @@
           "payload": {
             "argv": ["bash", "-lc", "./train.sh a"],
             "pool": "tpuswarm-v6e8",
-            "resources": {"accelerators": "tpu-v6e-8", "use_spot": true}
+            "resources": {
+              "accelerators": "tpu-v6e-8",
+              "accelerator_args": {"gcp_queued_resource": true},
+              "use_spot": true
+            }
           }
         }
       },
@@ -24,7 +28,11 @@
           "payload": {
             "argv": ["bash", "-lc", "./train.sh b"],
             "pool": "tpuswarm-v6e8",
-            "resources": {"accelerators": "tpu-v6e-8", "use_spot": true}
+            "resources": {
+              "accelerators": "tpu-v6e-8",
+              "accelerator_args": {"gcp_queued_resource": true},
+              "use_spot": true
+            }
           }
         }
       }

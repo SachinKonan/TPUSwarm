@@ -1,0 +1,4 @@
+[submodule "third_party/skypilot"]
+	path = third_party/skypilot
+	url = https://github.com/SachinKonan/skypilot.git
+	branch = tpuswarm/queued-resource-recovery

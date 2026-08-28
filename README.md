@@ -7,6 +7,24 @@ checkpoint barriers, and warm-capacity admission policy. It deliberately does
 not implement its own remote worker, process lease, spot retry loop, regional
 optimizer, log service, or infrastructure controller.
 
+Clone this repository recursively so the pinned SkyPilot fork is present:
+
+```bash
+git clone --recurse-submodules https://github.com/SachinKonan/TPUSwarm.git
+cd TPUSwarm
+uv sync --extra server --extra skypilot
+```
+
+The `third_party/skypilot` submodule tracks the
+`tpuswarm/queued-resource-recovery` branch of
+[`SachinKonan/skypilot`](https://github.com/SachinKonan/skypilot). Its gitlink
+pins the exact tested revision. The fork adds GCP TPU queued-resource cleanup:
+`SUSPENDING`, `SUSPENDED`, `FAILED`, and `DELETING` are treated as terminal
+provisioning states, stale wrappers are force-deleted, and SkyPilot Managed
+Jobs can immediately continue their normal recovery policy. `uv` uses this
+local source for the `skypilot` extra; package installers without `uv` fetch
+the same pinned fork commit from the dependency in `pyproject.toml`.
+
 ## Ownership boundary
 
 SkyPilot owns:
