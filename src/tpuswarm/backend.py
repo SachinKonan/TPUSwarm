@@ -71,6 +71,11 @@ class SkyPilotBackend:
                 fields=None,
             )
             response = sky.get(request_id)
+        except sky.exceptions.ClusterDoesNotExist:
+            # A fresh SkyPilot installation has no Managed Jobs controller
+            # until the first job is launched. Treat that bootstrap state as
+            # an empty queue so reconciliation can submit that first job.
+            return []
         except Exception as exc:
             raise BackendUnavailableError(
                 f"SkyPilot queue lookup failed: {exc}"
